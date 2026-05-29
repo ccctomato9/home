@@ -25,16 +25,19 @@ display: none;
 #custom-text {
 display: none; /* 預設隱藏 */
 position: fixed;
-top: 20px; /* 距離頂部 20px */
+bottom: calc(30px + env(safe-area-inset-bottom)); 
+width: max-content;
+max-width: 80%;
 left: 50%;
 transform: translateX(-50%);
-background: rgba(0, 0, 0, 0.6);
+background: rgba(106, 167, 203, 0.818);
 color: white;
 padding: 0.5em 1em;
 font-size: 1.5em;
 border-radius: 0.3em;
 z-index: 9999;
 pointer-events: none;
+text-align: center; /* 確保多行時文字置中 */
 }
 </style>
 </head>
