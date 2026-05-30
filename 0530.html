@@ -163,45 +163,69 @@ a-scene {
   <a-light type="ambient" intensity="3"></a-light>
   <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-  <a-entity mindar-image-target="targetIndex: 0" id="target-0">
-    <a-plane src="#img-bone1" width="1.2" height="0.85" position="0 0 0" touch-transform></a-plane>
+ <a-entity mindar-image-target="targetIndex: 0" id="target-0">
+    <a-plane src="#img-bone1" width="1" auto-ratio touch-transform></a-plane>
   </a-entity>
 
   <a-entity mindar-image-target="targetIndex: 1" id="target-1">
-    <a-plane src="#img-bone2" width="1.2" height="0.85" position="0 0 0" touch-transform></a-plane>
+    <a-plane src="#img-bone2" width="1" auto-ratio touch-transform></a-plane>
   </a-entity>
 
   <a-entity mindar-image-target="targetIndex: 2" id="target-2">
-    <a-plane src="#img-bone3" width="1.2" height="0.85" position="0 0 0" touch-transform></a-transform>
-  </a-entity>
+    <a-plane src="#img-bone3" width="1" auto-ratio touch-transform></a-plane> </a-entity>
 
   <a-entity mindar-image-target="targetIndex: 3" id="target-3">
-    <a-plane src="#img-bone4" width="1.2" height="0.85" position="0 0 0" touch-transform></a-plane>
+    <a-plane src="#img-bone4" width="1" auto-ratio touch-transform></a-plane>
   </a-entity>
 
   <a-entity mindar-image-target="targetIndex: 4" id="target-4">
-    <a-plane src="#img-bone5" width="1.2" height="0.85" position="0 0 0" touch-transform></a-plane>
+    <a-plane src="#img-bone5" width="1" auto-ratio touch-transform></a-plane>
   </a-entity>
 
   <a-entity mindar-image-target="targetIndex: 5" id="target-5">
-    <a-plane src="#img-bone6" width="1.2" height="0.85" position="0 0 0" touch-transform></a-plane>
+    <a-plane src="#img-bone6" width="1" auto-ratio touch-transform></a-plane>
   </a-entity>
 
   <a-entity mindar-image-target="targetIndex: 6" id="target-6">
-    <a-plane src="#img-bone7" width="1.2" height="0.85" position="0 0 0" touch-transform></a-plane>
+    <a-plane src="#img-bone7" width="1" auto-ratio touch-transform></a-plane>
   </a-entity>
 
   <a-entity mindar-image-target="targetIndex: 7" id="target-7">
-    <a-plane src="#img-bone8" width="1.2" height="0.85" position="0 0 0" touch-transform></a-plane>
+    <a-plane src="#img-bone8" width="1" auto-ratio touch-transform></a-plane>
   </a-entity>
 
   <a-entity mindar-image-target="targetIndex: 8" id="target-8">
-    <a-plane src="#img-bone9" width="1.2" height="0.85" position="0 0 0" touch-transform></a-plane>
+    <a-plane src="#img-bone9" width="1" auto-ratio touch-transform></a-plane>
   </a-entity>
-
 </a-scene>
 
 <script>
+  FRAME.registerComponent('auto-ratio', {
+  init: function () {
+    const el = this.el;
+    const srcSelector = el.getAttribute('src');
+    if (!srcSelector) return;
+
+    const img = document.querySelector(srcSelector);
+    if (!img) return;
+
+    const calculateRatio = () => {
+      const naturalWidth = img.naturalWidth;
+      const naturalHeight = img.naturalHeight;
+      
+      if (naturalWidth && naturalHeight) {
+        el.setAttribute('width', 1);
+        el.setAttribute('height', naturalHeight / naturalWidth);
+      }
+    };
+
+    if (img.complete) {
+      calculateRatio();
+    } else {
+      img.addEventListener('load', calculateRatio);
+    }
+  }
+});
 const boneData = [
   {
     title: "🦴 頭骨（Skull）",
@@ -281,8 +305,6 @@ window.addEventListener("load", () => {
     });
   }
 });
-
-// ─── touch-transform 組件 ──────────────────────────────────────
 AFRAME.registerComponent('touch-transform', {
   init: function () {
     const el = this;
