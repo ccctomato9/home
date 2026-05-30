@@ -23,9 +23,6 @@ a-scene {
   display: none !important;
 }
 
-/* ─────────────────────────────────────────────────────────────
-   新版：高級感極簡小知識面板（Bottom Sheet）
-   ───────────────────────────────────────────────────────────── */
 #info-panel {
   position: fixed;
   bottom: 0;
@@ -34,8 +31,7 @@ a-scene {
   max-height: 40vh; 
   overflow-y: auto;
   
-  /* 純中性黑灰色底，搭配高密度毛玻璃效果 */
-  background: rgba(18, 18, 18, 0.9);
+  background: rgba(6, 6, 6, 0.486);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   
@@ -44,19 +40,16 @@ a-scene {
   box-sizing: border-box;
   padding: 12px 28px 32px; 
 
-  /* 以低調的灰白細線封頂，移除所有彩色邊框 */
   border-top: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 20px 20px 0 0;
   box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.5);
   
-  /* 初始狀態：隱藏並推至螢幕下方，準備進行平滑滑出 */
   transform: translateY(100%);
   visibility: hidden;
   opacity: 0;
   transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease, visibility 0.4s;
 }
 
-/* 面板上方的簡約導引條，暗示可滑動查看 */
 #info-panel::before {
   content: '';
   display: block;
@@ -67,25 +60,22 @@ a-scene {
   margin: 0 auto 20px;
 }
 
-/* 當動態激活時的樣式狀態 */
 #info-panel.active {
   transform: translateY(0);
   visibility: visible;
   opacity: 1;
 }
 
-/* 標題：回歸純白，依賴字體粗細形成階層 */
 #info-panel h2 {
   margin: 0 0 14px 0;
   font-size: 1.25em;
   font-weight: 600;
   color: #ffffff; 
   letter-spacing: 0.5px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+  border-bottom: 1px solid rgb(122, 194, 210); 
   padding-bottom: 12px;
 }
 
-/* 內文：使用高閱讀性的霧白灰色，消除緊湊感 */
 #info-panel p {
   margin: 0;
   font-size: 0.95em;
@@ -94,7 +84,6 @@ a-scene {
   text-align: justify;
 }
 
-/* 隱蔽式極簡滾動條 */
 #info-panel::-webkit-scrollbar {
   width: 4px;
 }
@@ -106,9 +95,7 @@ a-scene {
   border-radius: 2px;
 }
 
-/* ─────────────────────────────────────────────────────────────
-   新版：極簡不發光 掃描提示框
-   ───────────────────────────────────────────────────────────── */
+
 #scan-hint {
   position: fixed;
   top: 24px;
@@ -117,19 +104,17 @@ a-scene {
   z-index: 9998;
   pointer-events: none;
   
-  /* 完全抹除科技青色與發光動畫，改為沈穩的純白字體與灰黑底盤 */
   color: #ffffff;
   font-size: 0.95rem;
   letter-spacing: 1px;
   background: rgba(20, 20, 20, 0.85);
   padding: 11px 26px;
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(86, 184, 220, 0.442);
   
   transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-/* 當識別成功、提示需要隱藏時的狀態 */
 #scan-hint.hidden {
   opacity: 0;
   visibility: hidden;
@@ -138,7 +123,7 @@ a-scene {
 </head>
 <body>
 
-<div id="scan-hint">📷 請對準骨骼圖片進行掃描</div>
+<div id="scan-hint">📷 對準圖片進行掃描</div>
 
 <div id="info-panel">
   <h2 id="bone-title"></h2>
@@ -217,7 +202,6 @@ a-scene {
 </a-scene>
 
 <script>
-// ─── 骨骼資料 ───────────────────────────────────────────────
 const boneData = [
   {
     title: "🦴 頭骨（Skull）",
@@ -257,13 +241,11 @@ const boneData = [
   }
 ];
 
-// ─── UI 元素 ─────────────────────────────────────────────────
 const panel    = document.getElementById('info-panel');
 const titleEl  = document.getElementById('bone-title');
 const descEl   = document.getElementById('bone-desc');
 const hint     = document.getElementById('scan-hint');
 
-/* 修改點：改為透過增刪 class 來顯示/隱藏，確保配合 CSS 的滑出動畫與透明度 */
 function showInfo(index) {
   const data = boneData[index];
   titleEl.textContent = data.title;
@@ -283,7 +265,6 @@ function hideInfo() {
 
 const activeTargets = new Set();
 
-// ─── 綁定 9 個 target 事件 ────────────────────────────────────
 window.addEventListener("load", () => {
   for (let i = 0; i < 9; i++) {
     const el = document.getElementById(`target-${i}`);
