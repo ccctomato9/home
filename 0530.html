@@ -10,7 +10,8 @@ html, body {
   margin: 0; padding: 0;
   width: 100%; height: 100%;
   overflow: hidden;
-  font-family: "Microsoft JhengHei", sans-serif;
+  font-family: "Microsoft JhengHei", BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Microsoft JhengHei", sans-serif;
+  background-color: #7b8cc0;
 }
 a-scene {
   width: 100%; height: 100%;
@@ -50,20 +51,61 @@ a-scene {
 }
 
 /* 掃描提示 */
-#scan-hint {
-  display: block;
+#scan-container {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  font-size: 1.1em;
-  background: rgba(0,0,0,0.5);
-  padding: 10px 20px;
-  border-radius: 8px;
+  top: 0; left: 0; width: 100%; height: 100%;
   z-index: 9998;
   pointer-events: none;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.scan-reticle {
+  width: 60vw;
+  height: 60vw;
+  max-width: 280px;
+  max-height: 280px;
+  border: 1px dashed rgba(0, 207, 255, 0.3);
+  position: relative;
+  margin-bottom: 24px;
+  box-shadow: inset 0 0 20px rgba(0, 207, 255, 0.05);
+}
+
+.scan-reticle::before, .scan-reticle::after {
+  content: '';
+  position: absolute;
+  width: 20px; height: 20px;
+  border: 3px solid #00cfff;
+}
+
+.scan-reticle::before {
+  top: -2px; left: -2px;
+  border-right: none; border-bottom: none;
+}
+
+.scan-reticle::after {
+  bottom: -2px; right: -2px;
+  border-left: none; border-top: none;
+}
+
+#scan-hint {
+  color: #00cfff;
+  font-size: 1rem;
+  letter-spacing: 2px;
+  background: rgba(10, 16, 30, 0.75);
+  padding: 10px 24px;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 207, 255, 0.2);
+  text-shadow: 0 0 8px rgba(0, 207, 255, 0.6);
+  animation: pulse-glow 2s infinite ease-in-out;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.6; transform: scale(0.98); }
+  50% { opacity: 1; transform: scale(1); }
 }
 </style>
 </head>
