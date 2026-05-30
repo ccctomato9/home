@@ -23,31 +23,76 @@ a-scene {
   display: none !important;
 }
 
-/* 覆蓋整個畫面的資訊面板 */
 #info-panel {
-  display: none;
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  max-height: 45vh;
+  max-height: 40vh; 
   overflow-y: auto;
-  background: rgba(0, 0, 0, 0.82);
-  color: white;
+  
+ 
+  background: rgba(18, 18, 18, 0.9);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  
+  color: #ffffff;
   z-index: 9999;
   box-sizing: border-box;
-  padding: 16px 18px 20px;
-  border-top: 3px solid #00cfff;
+  padding: 12px 28px 32px; 
+
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.5);
+  
+  transform: translateY(100%);
+  visibility: hidden;
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease, visibility 0.4s;
 }
+
+#info-panel::before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  margin: 0 auto 20px;
+}
+
+#info-panel.active {
+  transform: translateY(0);
+  visibility: visible;
+  opacity: 1;
+}
+
 #info-panel h2 {
-  margin: 0 0 8px 0;
-  font-size: 1.3em;
-  color: #00cfff;
+  margin: 0 0 14px 0;
+  font-size: 1.25em;
+  font-weight: 600;
+  color: #ffffff; 
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
 }
+
 #info-panel p {
   margin: 0;
   font-size: 0.95em;
-  line-height: 1.7;
+  line-height: 1.8;
+  color: #d1d5db; 
+  text-align: justify;
+}
+
+#info-panel::-webkit-scrollbar {
+  width: 4px;
+}
+#info-panel::-webkit-scrollbar-track {
+  background: transparent;
+}
+#info-panel::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
 }
 
 /* 掃描提示 */
